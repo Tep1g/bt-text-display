@@ -23,6 +23,12 @@ All the tools we need, including Git and Make, should be available after install
 
 `$ sudo apt install build-essential`
 
+### Before Building the Project for the first time
+
+`$ git submodule init`
+
+`$ git submodule update`
+
 ### Building the Project
 
 `$ make`
