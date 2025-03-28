@@ -5,3 +5,6 @@
 [submodule "submodules/pico-sdk"]
 	path = submodules/pico-sdk
 	url = git@github.com:raspberrypi/pico-sdk.git
+[submodule "submodules/lvgl"]
+	path = submodules/lvgl
+	url = git@github.com:lvgl/lvgl.git
