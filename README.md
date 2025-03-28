@@ -31,4 +31,6 @@ All the tools we need, including Git and Make, should be available after install
 
 ### Building the Project
 
-`$ make`
+Build the project with `$ make`
+
+Delete the current build with `$ make clean`
