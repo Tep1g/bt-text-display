@@ -27,7 +27,7 @@ All the tools we need, including Git and Make, should be available after install
 
 `$ git submodule init`
 
-`$ git submodule update`
+`$ git submodule update --init --recursive`
 
 ### Building the Project
 
