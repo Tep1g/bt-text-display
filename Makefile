@@ -3,12 +3,12 @@ BUILD_DIR = build
 
 # Define the CMake and Make commands based on the environment
 ifeq ($(OS), Windows_NT)
-    CMAKE_COMMAND = cmake -G "MinGW Makefiles" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
+    CMAKE_COMMAND = cmake -G "MinGW Makefiles" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DPICO_BOARD=pico_w ..
  	MAKE_COMMAND = mingw32-make
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S), Linux)
-		CMAKE_COMMAND = cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
+		CMAKE_COMMAND = cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DPICO_BOARD=pico_w ..
 		MAKE_COMMAND = make
     else
         $(error Unsupported OS: $(UNAME_S))
