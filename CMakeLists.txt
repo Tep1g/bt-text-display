@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 # Set custom lvgl config path
 add_compile_definitions(
     LV_CONF_INCLUDE_SIMPLE
-    LV_CONF_PATH="${CMAKE_CURRENT_SOURCE_DIR}/lib/lv_conf.h"
+    LV_CONF_PATH="${CMAKE_CURRENT_SOURCE_DIR}/config/lvgl/lv_conf.h"
 )
 
 # Pull in SDK (must be before project)
@@ -14,6 +14,11 @@ include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 set(FREERTOS_KERNEL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/submodules/FreeRTOS-Kernel)
 include(${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2040/FreeRTOS_Kernel_import.cmake)
 
+# Create an interface library for freertos config
+add_library(freertos_config INTERFACE)
+
+# Add the freertos config directory as an include path
+target_include_directories(freertos_config INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/config/freertos)
 
 # Pull in the LVGL library
 add_subdirectory(submodules/lvgl)
@@ -25,13 +30,10 @@ set(CMAKE_CXX_STANDARD 17)
 # Initialize the SDK
 pico_sdk_init()
 
-# Add the lib directory (which has its own CMakeLists.txt)
-add_subdirectory(lib)
-
 add_executable(app src/main.c)
 
 # pull in common dependencies
-target_link_libraries(app pico_stdlib FreeRTOS-Kernel FreeRTOS-Kernel-Heap4 lib lvgl)
+target_link_libraries(app pico_stdlib FreeRTOS-Kernel FreeRTOS-Kernel-Heap4 freertos_config lvgl)
 
 # create map/bin/hex/uf2 file etc.
 pico_add_extra_outputs(app)
