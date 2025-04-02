@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 # Set custom lvgl config path
 add_compile_definitions(
     LV_CONF_INCLUDE_SIMPLE
+    LV_USE_ST7796
     LV_CONF_PATH="${CMAKE_CURRENT_SOURCE_DIR}/config/lvgl/lv_conf.h"
 )
 
