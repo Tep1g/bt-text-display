@@ -1,5 +1,5 @@
-#ifndef LV_ST7796_H
-#define LV_ST7796_H
+#ifndef ST7796_H
+#define ST7796_H
 
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
