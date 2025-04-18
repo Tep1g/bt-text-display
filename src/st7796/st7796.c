@@ -82,17 +82,17 @@ static void st7796_send_color(lv_display_t *disp, const uint8_t *cmd, size_t cmd
         if (!st7796.inited) {
                 return;
         }
-        while(st7796.bus_busy);
         // Byte swapping
         uint8_t msg[NUM_BYTES_PER_PIXEL];
         for (uint8_t i = 0; i < NUM_BYTES_PER_PIXEL; i++) {
                 msg[i] = param[NUM_BYTES_PER_PIXEL - i - 1];
         }
+        while(st7796.bus_busy);
+        st7796.bus_busy = true;
         
         gpio_put(st7796.cs_gpio, 0);
         gpio_put(st7796.dcx_gpio, 0);
 
-        st7796.bus_busy = true;
         int ret = spi_write_blocking(st7796.spi, cmd, cmd_size);
         if (ret == (int)cmd_size) {
                 gpio_put(st7796.dcx_gpio, 1);
