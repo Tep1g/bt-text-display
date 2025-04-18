@@ -5,6 +5,8 @@
 #include "hardware/spi.h"
 #include "lvgl.h"
 
+#define NUM_BYTES_PER_PIXEL LV_COLOR_DEPTH / 8
+
 static struct ST7796 {
         lv_display_t *disp;
         spi_inst_t *spi;

@@ -5,8 +5,6 @@
 #include "hardware/spi.h"
 #include "lvgl.h"
 
-#define NUM_BYTES_PER_PIXEL LV_COLOR_DEPTH / 8
-
 void st7796_init(
     uint32_t st7796_hor_res, 
     uint32_t st7796_ver_res, 
