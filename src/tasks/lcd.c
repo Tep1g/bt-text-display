@@ -18,6 +18,8 @@ const lv_lcd_flag_t st7796_flag = LV_LCD_FLAG_NONE;
 const uint st7796_dma_irq_index = 0;
 
 void lcd_task() {
+    lv_init();
+
     spi_init(spi0, 40000000);
     spi_set_slave(spi0, false);
     gpio_set_function(ST7796_SPI_SCK, GPIO_FUNC_SPI);
