@@ -16,14 +16,15 @@ static struct ST7796 {
         int dma_channel;
         uint dma_irq_index;
         dma_channel_config *dma_config;
-        bool inited;
         bool bus_busy;
 } st7796;
+
+static bool st7796_inited = false;
 
 /* Send short command to the LCD. This function shall wait until the transaction finishes. */
 static void st7796_send_cmd(lv_display_t *disp, const uint8_t *cmd, size_t cmd_size, const uint8_t *param, size_t param_size)
 {
-        if (!st7796.inited) {
+        if (!st7796_inited) {
                 return;
         }
         while(st7796.bus_busy);
@@ -38,7 +39,7 @@ static void st7796_send_cmd(lv_display_t *disp, const uint8_t *cmd, size_t cmd_s
 /* Send large array of pixel data to the LCD. If necessary, this function has to do the byte-swapping. This function can do the transfer in the background. */
 static void st7796_send_color(lv_display_t *disp, const uint8_t *cmd, size_t cmd_size, uint8_t *param, size_t param_size)
 {
-        if (!st7796.inited) {
+        if (!st7796_inited) {
                 return;
         }
         // Byte swapping
@@ -88,7 +89,7 @@ void st7796_init(
         uint dma_irq_index, 
         dma_channel_config *dma_config
 ) {
-        if (st7796.inited) {
+        if (st7796_inited) {
                 return;
         }
         st7796.disp = lv_st7796_create(st7796_hor_res, st7796_ver_res, st7796_flag, st7796_send_cmd, st7796_send_color);;
@@ -114,5 +115,5 @@ void st7796_init(
 
         gpio_put(st7796.cs_gpio, 1);
 
-        st7796.inited = true;
+        st7796_inited = true;
 }
