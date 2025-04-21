@@ -17,7 +17,7 @@ const uint32_t st7796_ver_res = 480;
 const lv_lcd_flag_t st7796_flag = LV_LCD_FLAG_NONE;
 const uint st7796_dma_irq_index = 0;
 
-void lcd_task() {
+void lcd_task(void *pvParameters) {
     lv_init();
 
     spi_init(spi0, 40000000);
