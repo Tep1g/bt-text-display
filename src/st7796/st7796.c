@@ -57,7 +57,7 @@ static void st7796_send_color(lv_display_t *disp, const uint8_t *cmd, size_t cmd
                 gpio_put(st7796.dcx_gpio, 1);
                 dma_channel_configure(
                         st7796.dma_channel,
-                        &st7796.dma_config,
+                        st7796.dma_config,
                         &spi_get_hw(st7796.spi)->dr,
                         msg,
                         (uint)param_size,
