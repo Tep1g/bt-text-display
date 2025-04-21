@@ -2,6 +2,7 @@
 #define ST7796_H
 
 #include "pico/stdlib.h"
+#include "hardware/dma.h"
 #include "hardware/spi.h"
 #include "lvgl.h"
 
