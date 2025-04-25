@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 
+if (NOT DEFINED CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
 # Set custom lvgl config path
 add_compile_definitions(
     LV_CONF_INCLUDE_SIMPLE
