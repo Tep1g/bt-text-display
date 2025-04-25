@@ -92,7 +92,7 @@ void st7796_init(
         if (st7796_inited) {
                 return;
         }
-        st7796.disp = lv_st7796_create(st7796_hor_res, st7796_ver_res, st7796_flag, st7796_send_cmd, st7796_send_color);;
+        st7796.disp = lv_st7796_create(st7796_hor_res, st7796_ver_res, st7796_flag, st7796_send_cmd, st7796_send_color);
         st7796.spi = spi;
         st7796.cs_gpio = cs_gpio;
         st7796.dcx_gpio = dcx_gpio;
