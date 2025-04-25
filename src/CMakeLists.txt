@@ -1,4 +1,17 @@
-add_executable(app main.c)
+set(SRC_FILES
+    "main.c"
+    "st7796/st7796.c"
+    "tasks/lcd.c"
+)
+
+set(HEADER_DIRS 
+    "st7796"
+    "tasks"
+)
+
+add_executable(app ${SRC_FILES})
+
+target_include_directories(app PRIVATE ${HEADER_DIRS})
 
 # pull in common dependencies
 target_link_libraries(app
