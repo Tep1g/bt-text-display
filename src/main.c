@@ -3,6 +3,19 @@
 #include "task.h"
 #include "lcd.h"
 
+void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName ) {
+    ( void ) pxTask;
+    ( void ) pcTaskName;
+
+    configASSERT( ( volatile void * ) NULL );
+}
+
+void vApplicationMallocFailedHook( void ) {
+    configASSERT( ( volatile void * ) NULL );
+}
+
+void vApplicationTickHook( void ) {}
+
 void main() {
     stdio_init_all();
 
