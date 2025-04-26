@@ -1,12 +1,12 @@
 set(SRC_FILES
     "main.c"
-    "st7796/st7796.c"
-    "tasks/lcd.c"
+    "lcd_task/st7796/st7796.c"
+    "lcd_task/lcd.c"
 )
 
 set(HEADER_DIRS 
-    "st7796"
-    "tasks"
+    "lcd_task/st7796"
+    "lcd_task"
 )
 
 add_executable(app ${SRC_FILES})
