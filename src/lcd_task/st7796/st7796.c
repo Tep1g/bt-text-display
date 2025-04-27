@@ -29,9 +29,14 @@ static void st7796_send_cmd(lv_display_t *disp, const uint8_t *cmd, size_t cmd_s
         }
         while(st7796.bus_busy);
         st7796.bus_busy = true;
+
+        gpio_put(st7796.dcx_gpio, 0);
+        gpio_put(st7796.cs_gpio, 0);
         int ret = spi_write_blocking(st7796.spi, cmd, cmd_size);
         if (ret == (int)cmd_size) {
+                gpio_put(st7796.dcx_gpio, 1); 
                 spi_write_blocking(st7796.spi, param, param_size);
+                gpio_put(st7796.cs_gpio, 1);
         }
         st7796.bus_busy = false;
 }
