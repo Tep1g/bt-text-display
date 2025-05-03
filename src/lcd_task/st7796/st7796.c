@@ -82,7 +82,7 @@ void st7796_send_color_callback()
         }
 }
 
-void st7796_init(
+lv_disp_t *st7796_init(
         uint32_t st7796_hor_res, 
         uint32_t st7796_ver_res, 
         lv_lcd_flag_t st7796_flag, 
@@ -121,4 +121,5 @@ void st7796_init(
         gpio_put(st7796.cs_gpio, 1);
 
         st7796_inited = true;
+        return st7796.disp;
 }

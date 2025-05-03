@@ -6,7 +6,7 @@
 #include "hardware/spi.h"
 #include "lvgl.h"
 
-void st7796_init(
+lv_disp_t *st7796_init(
     uint32_t st7796_hor_res, 
     uint32_t st7796_ver_res, 
     lv_lcd_flag_t st7796_flag, 

@@ -41,7 +41,7 @@ void lcd_task(void *pvParameters) {
     irq_set_exclusive_handler(DMA_IRQ_0, st7796_send_color_callback);
     irq_set_enabled(DMA_IRQ_0, true);
 
-    st7796_init(
+    lv_disp_t *lv_st7796 = st7796_init(
         st7796_hor_res, 
         st7796_ver_res, 
         st7796_flag, 
