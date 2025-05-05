@@ -1,5 +1,5 @@
 /*
- * FreeRTOS V202212.00
+ * FreeRTOS V202111.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -19,13 +19,14 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * https://www.FreeRTOS.org
- * https://github.com/FreeRTOS
+ * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
  *
+ * 1 tab == 4 spaces!
  */
 
- #ifndef FREERTOS_CONFIG_H
- #define FREERTOS_CONFIG_H
+ #ifndef FREERTOS_CONFIG_EXAMPLES_COMMON_H
+ #define FREERTOS_CONFIG_EXAMPLES_COMMON_H
  
  /*-----------------------------------------------------------
   * Application specific definitions.
@@ -43,10 +44,10 @@
  #define configUSE_PREEMPTION                    1
  #define configUSE_TICKLESS_IDLE                 0
  #define configUSE_IDLE_HOOK                     0
- #define configUSE_TICK_HOOK                     1
+ #define configUSE_TICK_HOOK                     0
  #define configTICK_RATE_HZ                      ( ( TickType_t ) 1000 )
  #define configMAX_PRIORITIES                    32
- #define configMINIMAL_STACK_SIZE                ( configSTACK_DEPTH_TYPE ) 256
+ #define configMINIMAL_STACK_SIZE                ( configSTACK_DEPTH_TYPE ) 512 
  #define configUSE_16_BIT_TICKS                  0
  
  #define configIDLE_SHOULD_YIELD                 1
@@ -60,7 +61,8 @@
  #define configUSE_QUEUE_SETS                    1
  #define configUSE_TIME_SLICING                  1
  #define configUSE_NEWLIB_REENTRANT              0
- #define configENABLE_BACKWARD_COMPATIBILITY     0
+ // todo need this for lwip FreeRTOS sys_arch to compile
+ #define configENABLE_BACKWARD_COMPATIBILITY     1
  #define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
  
  /* System */
@@ -74,14 +76,18 @@
  #define configAPPLICATION_ALLOCATED_HEAP        0
  
  /* Hook function related definitions. */
- #define configCHECK_FOR_STACK_OVERFLOW          2
- #define configUSE_MALLOC_FAILED_HOOK            1
+ #define configCHECK_FOR_STACK_OVERFLOW          0
+ #define configUSE_MALLOC_FAILED_HOOK            0
  #define configUSE_DAEMON_TASK_STARTUP_HOOK      0
  
  /* Run time and task stats gathering related definitions. */
  #define configGENERATE_RUN_TIME_STATS           0
  #define configUSE_TRACE_FACILITY                1
  #define configUSE_STATS_FORMATTING_FUNCTIONS    0
+ 
+ /* Co-routine related definitions. */
+ #define configUSE_CO_ROUTINES                   0
+ #define configMAX_CO_ROUTINE_PRIORITIES         1
  
  /* Software timer related definitions. */
  #define configUSE_TIMERS                        1
@@ -96,11 +102,19 @@
  #define configMAX_API_CALL_INTERRUPT_PRIORITY   [dependent on processor and application]
  */
  
+ #if FREE_RTOS_KERNEL_SMP // set by the RP2xxx SMP port of FreeRTOS
  /* SMP port only */
+ #ifndef configNUMBER_OF_CORES
  #define configNUMBER_OF_CORES                   2
+ #endif
+ #define configNUM_CORES                         configNUMBER_OF_CORES
  #define configTICK_CORE                         0
  #define configRUN_MULTIPLE_PRIORITIES           1
+ #if configNUMBER_OF_CORES > 1
  #define configUSE_CORE_AFFINITY                 1
+ #endif
+ #define configUSE_PASSIVE_IDLE_HOOK             0
+ #endif
  
  /* RP2040 specific */
  #define configSUPPORT_PICO_SYNC_INTEROP         1
@@ -129,10 +143,14 @@
  #define INCLUDE_xTaskResumeFromISR              1
  #define INCLUDE_xQueueGetMutexHolder            1
  
- /* A header file that defines trace macro can be included here. */
+ #if PICO_RP2350
+ #define configENABLE_MPU                        0
+ #define configENABLE_TRUSTZONE                  0
+ #define configRUN_FREERTOS_SECURE_ONLY          1
+ #define configENABLE_FPU                        1
+ #define configMAX_SYSCALL_INTERRUPT_PRIORITY    16
+ #endif
  
- /* SMP Related config. */
- #define configUSE_PASSIVE_IDLE_HOOK             0
- #define portSUPPORT_SMP                         1
+ /* A header file that defines trace macro can be included here. */
  
  #endif /* FREERTOS_CONFIG_H */
