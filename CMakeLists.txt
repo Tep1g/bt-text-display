@@ -4,6 +4,9 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 
+set(LV_CONF_BUILD_DISABLE_DEMOS 1)
+set(LV_CONF_BUILD_DISABLE_EXAMPLES 1)
+
 # Set custom lvgl config path
 add_compile_definitions(
     LV_CONF_INCLUDE_SIMPLE
