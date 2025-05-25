@@ -20,6 +20,7 @@ static struct ST7796 {
 /* Send short command to the LCD. This function shall wait until the transaction finishes. */
 static void st7796_send_cmd(lv_display_t *disp, const uint8_t *cmd, size_t cmd_size, const uint8_t *param, size_t param_size)
 {
+        LV_UNUSED(disp);
         while(st7796.bus_busy);
         st7796.bus_busy = true;
 
@@ -38,6 +39,7 @@ static void st7796_send_cmd(lv_display_t *disp, const uint8_t *cmd, size_t cmd_s
 /* Send large array of pixel data to the LCD. If necessary, this function has to do the byte-swapping. This function can do the transfer in the background. */
 static void st7796_send_color(lv_display_t *disp, const uint8_t *cmd, size_t cmd_size, uint8_t *param, size_t param_size)
 {
+        LV_UNUSED(disp);
         while(st7796.bus_busy);
         st7796.bus_busy = true;
         
