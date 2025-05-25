@@ -16,7 +16,7 @@ void vApplicationMallocFailedHook( void ) {
 
 void vApplicationTickHook( void ) {}
 
-void main() {
+int main() {
     stdio_init_all();
 
     TaskHandle_t lcd_task_handle;
