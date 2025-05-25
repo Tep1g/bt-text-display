@@ -28,11 +28,10 @@ void lcd_task(void *pvParameters) {
     gpio_set_dir(ST7796_SPI_CS, GPIO_OUT);
     gpio_set_dir(ST7796_SPI_DCX, GPIO_OUT);
     gpio_set_dir(ST7796_SPI_RST, GPIO_OUT);
-    spi_set_format(spi0, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
 
     const int st7796_dma_channel = dma_claim_unused_channel(true);
     dma_channel_config st7796_dma_config = dma_channel_get_default_config(st7796_dma_channel);
-    channel_config_set_transfer_data_size(&st7796_dma_config, DMA_SIZE_8);
+    channel_config_set_transfer_data_size(&st7796_dma_config, DMA_SIZE_16);
     channel_config_set_dreq(&st7796_dma_config, spi_get_dreq(spi0, true));
     channel_config_set_read_increment(&st7796_dma_config, true);
     channel_config_set_write_increment(&st7796_dma_config, false);

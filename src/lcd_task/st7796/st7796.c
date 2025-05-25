@@ -5,8 +5,6 @@
 #include "hardware/spi.h"
 #include "lvgl.h"
 
-#define NUM_BYTES_PER_PIXEL LV_COLOR_DEPTH / 8
-
 static struct ST7796 {
         lv_display_t *disp;
         spi_inst_t *spi;
@@ -27,6 +25,7 @@ static void st7796_send_cmd(lv_display_t *disp, const uint8_t *cmd, size_t cmd_s
 
         gpio_put(st7796.dcx_gpio, 0);
         gpio_put(st7796.cs_gpio, 0);
+        spi_set_format(st7796.spi, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
         int ret = spi_write_blocking(st7796.spi, cmd, cmd_size);
         if (ret == (int)cmd_size) {
                 gpio_put(st7796.dcx_gpio, 1); 
@@ -39,26 +38,23 @@ static void st7796_send_cmd(lv_display_t *disp, const uint8_t *cmd, size_t cmd_s
 /* Send large array of pixel data to the LCD. If necessary, this function has to do the byte-swapping. This function can do the transfer in the background. */
 static void st7796_send_color(lv_display_t *disp, const uint8_t *cmd, size_t cmd_size, uint8_t *param, size_t param_size)
 {
-        // Byte swapping
-        uint8_t msg[NUM_BYTES_PER_PIXEL];
-        for (uint8_t i = 0; i < NUM_BYTES_PER_PIXEL; i++) {
-                msg[i] = param[NUM_BYTES_PER_PIXEL - i - 1];
-        }
         while(st7796.bus_busy);
         st7796.bus_busy = true;
         
         gpio_put(st7796.cs_gpio, 0);
         gpio_put(st7796.dcx_gpio, 0);
 
+        spi_set_format(st7796.spi, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
         int ret = spi_write_blocking(st7796.spi, cmd, cmd_size);
         if (ret == (int)cmd_size) {
                 gpio_put(st7796.dcx_gpio, 1);
+                spi_set_format(st7796.spi, 16, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
                 dma_channel_configure(
                         st7796.dma_channel,
                         st7796.dma_config,
                         &spi_get_hw(st7796.spi)->dr,
-                        msg,
-                        (uint)param_size,
+                        param,
+                        (uint)(param_size / 2),
                         true
                 );
         }
