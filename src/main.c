@@ -4,7 +4,7 @@
 #include "lcd.h"
 #include "https_client.h"
 
-#define WEB_API_TASK_STACK_SIZE 4096U
+#define WEB_API_TASK_STACK_SIZE 2048U
 
 #define LCD_TASK_STACK_SIZE 2048
 
