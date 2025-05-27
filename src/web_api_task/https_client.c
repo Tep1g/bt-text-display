@@ -126,10 +126,12 @@ static void update_game_icon(const json_t *player_property, json_t *json_mem) {
 
     // the user is in-game
     if (game_id_field != NULL) {
-        const char *game_id = json_getValue(game_id_field);
+        const uint32_t game_id = (uint32_t)(json_getInteger(game_id_field));
+        char game_id_str[11] = {0};
+        sprintf(game_id_str, "%u", game_id);
 
         strcpy(url_request_buffer, OWNED_GAMES_URL_REQUEST_PORTION);
-        strcat(url_request_buffer, game_id);
+        strcat(url_request_buffer, game_id_str);
         resp_json.len = 0;
         make_http_request((void *)&resp_json, http_client_recv_json_callback, API_HOSTNAME, url_request_buffer);
         resp_json.buf[resp_json.len] = '\0';
@@ -150,6 +152,7 @@ static void update_game_icon(const json_t *player_property, json_t *json_mem) {
 
             // get the new game icon
             strcpy(url_request_buffer, GAME_ICON_URL_REQUEST_PORTION);
+            strcat(url_request_buffer, game_id_str);
             strcat(url_request_buffer, "/");
             strcat(url_request_buffer, game_icon_hash);
             strcat(url_request_buffer, ".jpg");
