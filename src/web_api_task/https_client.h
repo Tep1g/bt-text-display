@@ -8,6 +8,7 @@
 enum game_icon_state_t {
     GAME_ICON_SWITCHED,
     GAME_ICON_CLEARED,
+    GAME_ICON_SET,
     GAME_ICON_NO_CHANGE,
 };
 

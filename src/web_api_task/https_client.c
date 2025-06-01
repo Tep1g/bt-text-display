@@ -148,7 +148,16 @@ static void update_game_icon(const json_t *player_property, json_t *json_mem) {
 
         // game icon changed
         if (strcmp(game_icon_hash, resp_game_icon.hash) != 0) {
-            steam_user_data.game_icon_state = GAME_ICON_SWITCHED;
+            
+            // game icon set
+            if (resp_game_icon.hash[0] == '\0') {
+                steam_user_data.game_icon_state = GAME_ICON_SET;
+            }
+
+            // game icon switched
+            else {
+                steam_user_data.game_icon_state = GAME_ICON_SWITCHED;
+            }
 
             // get the new game icon
             strcpy(url_request_buffer, GAME_ICON_URL_REQUEST_PORTION);
