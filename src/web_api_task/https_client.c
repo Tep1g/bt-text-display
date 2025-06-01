@@ -100,6 +100,11 @@ static void update_display_name(const json_t *player_property) {
         strcpy(display_name_buf, display_name);
         steam_user_data.display_name_changed = true;
     }
+
+    // the user's display name did not change
+    else {
+        steam_user_data.display_name_changed = false;
+    }
 }
 
 static void update_avatar_icon(const json_t *player_property) {
