@@ -56,8 +56,10 @@ static struct steam_user_data_t steam_user_data = {
     .display_name = display_name_buf,
     .display_name_changed = false,
     .avatar_icon_jpg = avatar_icon_buf,
+    .avatar_icon_size = &(resp_avatar_icon.size),
     .avatar_icon_changed = false,
     .game_icon_jpg = game_icon_buf,
+    .game_icon_size = &(resp_game_icon.size),
     .game_icon_state = GAME_ICON_NO_CHANGE
 };
 
